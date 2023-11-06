@@ -65,6 +65,8 @@ export class FetchFeedsService {
     } catch (error) {
       console.error('Error saving data to the database:', error);
       throw error;
+    } finally {
+      this.prismaService.$disconnect();
     }
   }
 
