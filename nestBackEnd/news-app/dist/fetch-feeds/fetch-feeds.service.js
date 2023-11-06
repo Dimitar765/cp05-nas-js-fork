@@ -43,12 +43,12 @@ let FetchFeedsService = class FetchFeedsService {
                     description = description.replace(patern, '').replace(/\n/g, '');
                     content = content.replace(patern, '');
                     this.uniqueItems.add(title);
-                    console.log(this.uniqueItems.size);
                     await this.saveToDb(title, description, content, imageUrl);
                 }
             }
         }
-        catch {
+        catch (error) {
+            console.log(error);
         }
     }
     async saveToDb(title, description, content, imageUrl) {

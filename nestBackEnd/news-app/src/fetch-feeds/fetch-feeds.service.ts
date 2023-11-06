@@ -35,12 +35,11 @@ export class FetchFeedsService {
           content = content.replace(patern, ''); //.replace(/\n/g, '');
 
           this.uniqueItems.add(title);
-          console.log(this.uniqueItems.size);
           await this.saveToDb(title, description, content, imageUrl);
         }
       }
-    } catch {
-
+    } catch (error) {
+      console.log(error);
     }
   }
 
