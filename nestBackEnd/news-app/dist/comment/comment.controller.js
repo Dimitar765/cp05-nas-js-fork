@@ -16,6 +16,7 @@ exports.CommentController = void 0;
 const common_1 = require("@nestjs/common");
 const comment_service_1 = require("./comment.service");
 const comment_dto_1 = require("./dto/comment.dto");
+const authenticated_guard_1 = require("../auth/authenticated.guard");
 let CommentController = class CommentController {
     constructor(commetService) {
         this.commetService = commetService;
@@ -26,6 +27,7 @@ let CommentController = class CommentController {
 };
 exports.CommentController = CommentController;
 __decorate([
+    (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),
     (0, common_1.Post)('/news/:id/comments'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),

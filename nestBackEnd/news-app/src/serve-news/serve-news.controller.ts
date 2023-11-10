@@ -6,7 +6,7 @@ import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
 export class ServeNewsController {
   constructor(private readonly news: ServeNewsService) { }
 
-  //  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard)
   @Get()
   getArticles() {
     return this.news.fetchDb();

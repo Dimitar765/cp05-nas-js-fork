@@ -69,6 +69,9 @@ let FetchFeedsService = class FetchFeedsService {
             console.error('Error saving data to the database:', error);
             throw error;
         }
+        finally {
+            this.prismaService.$disconnect();
+        }
     }
     startFetch() {
         setInterval(() => {

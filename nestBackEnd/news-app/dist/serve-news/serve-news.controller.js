@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ServeNewsController = void 0;
 const common_1 = require("@nestjs/common");
 const serve_news_service_1 = require("./serve-news.service");
+const authenticated_guard_1 = require("../auth/authenticated.guard");
 let ServeNewsController = class ServeNewsController {
     constructor(news) {
         this.news = news;
@@ -28,6 +29,7 @@ let ServeNewsController = class ServeNewsController {
 };
 exports.ServeNewsController = ServeNewsController;
 __decorate([
+    (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
