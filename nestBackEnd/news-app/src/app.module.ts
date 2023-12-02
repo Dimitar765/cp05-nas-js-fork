@@ -6,6 +6,10 @@ import { FetchFeedsModule } from './fetch-feeds/fetch-feeds.module';
 import { FetchFeedsService } from './fetch-feeds/fetch-feeds.service';
 import { ServeNewsModule } from './serve-news/serve-news.module';
 import { CommentModule } from './comment/comment.module';
+import { ClsModule } from 'nestjs-cls';
+import { CatModule } from './cat/cat.module';
+import { CatService } from './cat/cat.service';
+import { CollectionModule } from './collection/collection.module';
 
 @Module({
   imports: [
@@ -14,12 +18,25 @@ import { CommentModule } from './comment/comment.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ClsModule.forRoot({
+      global: true,
+      middleware: {
+        mount: true,
+        generateId: true,
+        setup: (cls, req, res) => {
+          cls.get(res.locals.id);
+          cls.set('name', req.id);
+        },
+      },
+    }),
     FetchFeedsModule,
     ServeNewsModule,
     CommentModule,
+    CatModule,
+    CollectionModule,
   ],
   controllers: [],
-  providers: [FetchFeedsService],
+  providers: [FetchFeedsService, CatService],
 })
 export class AppModule {
   constructor(private readonly getData: FetchFeedsService) {

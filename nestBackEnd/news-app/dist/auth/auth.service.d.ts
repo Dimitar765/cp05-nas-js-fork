@@ -7,12 +7,7 @@ export declare class AuthService {
     signUp(dto: AuthDto): Promise<User>;
     signIn(dto: AuthDto): Promise<{
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
         email: string;
-        hash: string;
-        firstName: string;
-        lastName: string;
     }>;
     validateUser(email: string, password: string): Promise<{
         id: number;

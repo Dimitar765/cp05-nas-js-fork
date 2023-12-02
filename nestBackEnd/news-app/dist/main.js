@@ -5,6 +5,8 @@ const app_module_1 = require("./app.module");
 const common_1 = require("@nestjs/common");
 const session = require("express-session");
 const passport = require("passport");
+const prisma_session_store_1 = require("@quixo3/prisma-session-store");
+const client_1 = require("@prisma/client");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
@@ -21,7 +23,17 @@ async function bootstrap() {
         secret: 'some secret',
         resave: false,
         saveUninitialized: false,
-        cookie: { maxAge: 36000000 },
+        store: new prisma_session_store_1.PrismaSessionStore(new client_1.PrismaClient({
+            datasources: {
+                db: {
+                    url: process.env.DATABASE_URL,
+                },
+            },
+        }), {
+            checkPeriod: 2 * 60 * 1000,
+            dbRecordIdIsSessionId: true,
+            dbRecordIdFunction: undefined,
+        }),
     }));
     app.use(passport.initialize());
     app.use(passport.session());

@@ -6,20 +6,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CommentModule = void 0;
+exports.CollectionController = void 0;
 const common_1 = require("@nestjs/common");
-const comment_service_1 = require("./comment.service");
-const comment_controller_1 = require("./comment.controller");
-const cat_service_1 = require("../cat/cat.service");
-const cat_module_1 = require("../cat/cat.module");
-let CommentModule = class CommentModule {
+let CollectionController = class CollectionController {
 };
-exports.CommentModule = CommentModule;
-exports.CommentModule = CommentModule = __decorate([
-    (0, common_1.Module)({
-        providers: [comment_service_1.CommentService, cat_service_1.CatService],
-        controllers: [comment_controller_1.CommentController],
-        imports: [cat_module_1.CatModule],
-    })
-], CommentModule);
-//# sourceMappingURL=comment.module.js.map
+exports.CollectionController = CollectionController;
+exports.CollectionController = CollectionController = __decorate([
+    (0, common_1.Controller)('collection')
+], CollectionController);
+//# sourceMappingURL=collection.controller.js.map

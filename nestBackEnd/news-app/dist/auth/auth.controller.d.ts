@@ -14,12 +14,7 @@ export declare class AuthController {
     }>;
     signIn(dto: AuthDto): Promise<{
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
         email: string;
-        hash: string;
-        firstName: string;
-        lastName: string;
     }>;
     getUsers(): Promise<{
         id: number;

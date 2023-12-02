@@ -34,13 +34,15 @@ export class AuthService {
         email: dto.email,
       },
     });
-    //    console.log(user);
     if (!user) throw new ForbiddenException('user not found');
     const validatePass = await argon.verify(user.hash, dto.password);
 
     if (!validatePass) throw new ForbiddenException('invalid password');
 
-    return user;
+    return {
+      id: user.id,
+      email: user.email,
+    };
   }
 
   async validateUser(email: string, password: string) {
@@ -61,4 +63,5 @@ export class AuthService {
   async getUsers() {
     return await this.prismaService.user.findMany();
   }
+
 }

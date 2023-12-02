@@ -10,7 +10,8 @@ exports.AuthenticatedGuard = void 0;
 const common_1 = require("@nestjs/common");
 let AuthenticatedGuard = class AuthenticatedGuard {
     async canActivate(contex) {
-        const req = contex.switchToHttp().getRequest();
+        const req = await contex.switchToHttp().getRequest();
+        console.log('from authenticatedGuard');
         return req.isAuthenticated();
     }
 };

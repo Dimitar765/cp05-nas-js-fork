@@ -12,20 +12,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommentService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const cat_service_1 = require("../cat/cat.service");
 let CommentService = class CommentService {
-    constructor(prismaService) {
+    constructor(prismaService, cls) {
         this.prismaService = prismaService;
+        this.cls = cls;
     }
     async postComment(dto) {
+        const userId = this.cls.getCattUser();
         try {
-            console.time('post');
             await this.prismaService.comment.create({
                 data: {
                     article: { connect: { id: +dto.id } },
+                    user: { connect: { id: +userId } },
                     comment: dto.comment,
                 },
             });
-            console.timeEnd('post');
         }
         catch (error) {
             console.log('ups something went wrong', error);
@@ -36,6 +38,7 @@ let CommentService = class CommentService {
 exports.CommentService = CommentService;
 exports.CommentService = CommentService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        cat_service_1.CatService])
 ], CommentService);
 //# sourceMappingURL=comment.service.js.map

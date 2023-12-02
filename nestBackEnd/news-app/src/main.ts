@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import * as session from 'express-session';
 import * as passport from 'passport';
+import { PrismaSessionStore } from '@quixo3/prisma-session-store';
+import { PrismaClient } from '@prisma/client';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,9 +25,26 @@ async function bootstrap() {
       secret: 'some secret',
       resave: false,
       saveUninitialized: false,
-      cookie: { maxAge: 36000000 },
-    }),
-  );
+      store: new PrismaSessionStore(
+        new PrismaClient({
+          datasources: {
+            db: {
+              url: process.env.DATABASE_URL,
+            },
+          },
+        }),
+
+        {
+          checkPeriod: 2 * 60 * 1000, //ms
+          dbRecordIdIsSessionId: true,
+          dbRecordIdFunction: undefined,
+
+        }
+      ),
+    })
+  )
+
+
   app.use(passport.initialize());
   app.use(passport.session());
   await app.listen(3000);

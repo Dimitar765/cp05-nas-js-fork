@@ -12,6 +12,7 @@ export class ServeNewsController {
     return this.news.fetchDb();
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Get('/:id')
   getArticleById(@Param('id') id: number) {
     return this.news.getArticleById(id);

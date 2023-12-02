@@ -47,7 +47,10 @@ let AuthService = class AuthService {
         const validatePass = await argon.verify(user.hash, dto.password);
         if (!validatePass)
             throw new common_1.ForbiddenException('invalid password');
-        return user;
+        return {
+            id: user.id,
+            email: user.email,
+        };
     }
     async validateUser(email, password) {
         console.log('inside validate');

@@ -5,6 +5,7 @@ import { PrismaModule } from 'src/prisma/prisma.module';
 import { PassportModule, PassportStrategy } from '@nestjs/passport';
 import { LocalStrategy } from './strategy/localStrategy';
 import { SessionSerializer } from './session.serializer';
+import { CommentModule } from 'src/comment/comment.module';
 
 @Module({
   imports: [PrismaModule, PassportModule.register({ session: true })],

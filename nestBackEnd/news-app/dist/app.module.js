@@ -18,6 +18,10 @@ const fetch_feeds_module_1 = require("./fetch-feeds/fetch-feeds.module");
 const fetch_feeds_service_1 = require("./fetch-feeds/fetch-feeds.service");
 const serve_news_module_1 = require("./serve-news/serve-news.module");
 const comment_module_1 = require("./comment/comment.module");
+const nestjs_cls_1 = require("nestjs-cls");
+const cat_module_1 = require("./cat/cat.module");
+const cat_service_1 = require("./cat/cat.service");
+const collection_module_1 = require("./collection/collection.module");
 let AppModule = class AppModule {
     constructor(getData) {
         this.getData = getData;
@@ -33,12 +37,25 @@ exports.AppModule = AppModule = __decorate([
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
             }),
+            nestjs_cls_1.ClsModule.forRoot({
+                global: true,
+                middleware: {
+                    mount: true,
+                    generateId: true,
+                    setup: (cls, req, res) => {
+                        cls.get(res.locals.id);
+                        cls.set('name', req.id);
+                    },
+                },
+            }),
             fetch_feeds_module_1.FetchFeedsModule,
             serve_news_module_1.ServeNewsModule,
             comment_module_1.CommentModule,
+            cat_module_1.CatModule,
+            collection_module_1.CollectionModule,
         ],
         controllers: [],
-        providers: [fetch_feeds_service_1.FetchFeedsService],
+        providers: [fetch_feeds_service_1.FetchFeedsService, cat_service_1.CatService],
     }),
     __metadata("design:paramtypes", [fetch_feeds_service_1.FetchFeedsService])
 ], AppModule);

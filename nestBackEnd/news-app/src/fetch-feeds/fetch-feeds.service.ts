@@ -3,8 +3,8 @@ import axios from 'axios';
 import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class FetchFeedsService {
-  constructor(private readonly prismaService: PrismaService) { }
-  private readonly fetchInterval = 15 * 60 * 1000;
+  constructor(private readonly prismaService: PrismaService) {}
+  private readonly fetchInterval = 1 * 60 * 1000;
   private readonly uniqueItems: Set<string> = new Set<string>();
 
   URL = 'https://api.rss2json.com/v1/api.json?rss_url=';
@@ -18,7 +18,6 @@ export class FetchFeedsService {
       console.log('error fetching data', error);
     }
   }
-
   async getAndSortData() {
     const data = await this.fetchData();
 

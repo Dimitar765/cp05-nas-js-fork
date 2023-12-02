@@ -10,34 +10,72 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  email     String  @unique
-  hash      String  @unique
-  firstName String?
-  lastName  String?
+  email       String       @unique
+  hash        String       @unique
+  firstName   String?
+  lastName    String?
+  Comments    Comment[]
+  Collections Collection[]
+
+  AnaliticalNote AnaliticalNote[]
 }
 
 model Article {
-  id          Int       @id @default(autoincrement())
-  title       String    @unique
-  description String?
-  content     String?
-  createdAt   DateTime  @default(now())
-  imageUrl    String
-  Comments    Comment[]
+  id             Int              @id @default(autoincrement())
+  title          String           @unique
+  description    String?
+  content        String?
+  createdAt      DateTime         @default(now())
+  imageUrl       String
+  Comments       Comment[]
+  Collections    Collection[]     @relation("CollectionToArticle")
+  AnaliticalNote AnaliticalNote[]
 
   @@map("articles")
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
-  comment   String?
-  articleId Int?
-  article   Article? @relation(fields: [articleId], references: [id])
+  id          Int          @id @default(autoincrement())
+  comment     String?
+  articleId   Int?
+  article     Article?     @relation(fields: [articleId], references: [id])
+  userId      Int
+  user        User         @relation(fields: [userId], references: [id])
+  Collections Collection[] @relation("CollectionToComment")
 
   @@map("comments")
+}
+
+model AnaliticalNote {
+  id          Int          @id @default(autoincrement())
+  note        String?
+  articleId   Int?
+  article     Article?     @relation(fields: [articleId], references: [id])
+  userId      Int
+  user        User         @relation(fields: [userId], references: [id])
+  Collections Collection[] @relation("CollectionToAnaliticalNote")
+}
+
+model Collection {
+  id             Int              @id @default(autoincrement())
+  name           String
+  userId         Int
+  user           User             @relation(fields: [userId], references: [id])
+  articles       Article[]        @relation("CollectionToArticle")
+  comments       Comment[]        @relation("CollectionToComment")
+  AnaliticalNote AnaliticalNote[] @relation("CollectionToAnaliticalNote")
+
+  @@map("collections")
 }
