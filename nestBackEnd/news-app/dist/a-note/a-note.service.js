@@ -9,32 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CommentService = void 0;
+exports.ANoteService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
-let CommentService = class CommentService {
+let ANoteService = class ANoteService {
     constructor(prismaService) {
         this.prismaService = prismaService;
     }
-    async postComment(dto, id) {
+    async createNote(dto, id) {
         try {
-            await this.prismaService.comment.create({
+            await this.prismaService.analiticalNote.create({
                 data: {
                     article: { connect: { id: +dto.id } },
                     user: { connect: { id: +id } },
-                    comment: dto.comment,
-                },
+                    note: dto.content,
+                }
             });
         }
         catch (error) {
-            console.log('ups something went wrong', error);
-            throw error;
+            throw new common_1.HttpException(error.message, 400);
+        }
+    }
+    async getNotes(id) {
+        try {
+            return await this.prismaService.analiticalNote.findMany({
+                where: {
+                    userId: +id
+                }
+            });
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, 400);
         }
     }
 };
-exports.CommentService = CommentService;
-exports.CommentService = CommentService = __decorate([
+exports.ANoteService = ANoteService;
+exports.ANoteService = ANoteService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
-], CommentService);
-//# sourceMappingURL=comment.service.js.map
+], ANoteService);
+//# sourceMappingURL=a-note.service.js.map

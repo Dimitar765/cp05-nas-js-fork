@@ -10,6 +10,7 @@ import { ClsModule } from 'nestjs-cls';
 import { CatModule } from './cat/cat.module';
 import { CatService } from './cat/cat.service';
 import { CollectionModule } from './collection/collection.module';
+import { ANoteModule } from './a-note/a-note.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { CollectionModule } from './collection/collection.module';
     CommentModule,
     CatModule,
     CollectionModule,
+    ANoteModule,
   ],
   controllers: [],
   providers: [FetchFeedsService, CatService],

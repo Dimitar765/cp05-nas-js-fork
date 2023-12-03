@@ -12,33 +12,47 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CommentController = void 0;
+exports.ANoteController = void 0;
 const common_1 = require("@nestjs/common");
-const comment_service_1 = require("./comment.service");
-const comment_dto_1 = require("./dto/comment.dto");
+const a_note_service_1 = require("./a-note.service");
+const a_note_dto_1 = require("./dto/a-note.dto");
 const authenticated_guard_1 = require("../auth/authenticated.guard");
-let CommentController = class CommentController {
-    constructor(commetService) {
-        this.commetService = commetService;
+let ANoteController = class ANoteController {
+    constructor(aNoteService) {
+        this.aNoteService = aNoteService;
     }
-    postComment(dto, req) {
+    createNote(dto, req) {
         const user = req?.user;
         const id = user?.id;
-        return this.commetService.postComment(dto, id);
+        return this.aNoteService.createNote(dto, id);
+    }
+    getNotes(req) {
+        const user = req?.user;
+        const id = user?.id;
+        console.log('from controler', id);
+        return this.aNoteService.getNotes(id);
     }
 };
-exports.CommentController = CommentController;
+exports.ANoteController = ANoteController;
 __decorate([
     (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),
-    (0, common_1.Post)('/news/:id/comments'),
+    (0, common_1.Post)('news/:id/a-note'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [comment_dto_1.CommentDto, Object]),
+    __metadata("design:paramtypes", [a_note_dto_1.aNoteDto, Object]),
     __metadata("design:returntype", void 0)
-], CommentController.prototype, "postComment", null);
-exports.CommentController = CommentController = __decorate([
+], ANoteController.prototype, "createNote", null);
+__decorate([
+    (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),
+    (0, common_1.Get)('a-note'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], ANoteController.prototype, "getNotes", null);
+exports.ANoteController = ANoteController = __decorate([
     (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [comment_service_1.CommentService])
-], CommentController);
-//# sourceMappingURL=comment.controller.js.map
+    __metadata("design:paramtypes", [a_note_service_1.ANoteService])
+], ANoteController);
+//# sourceMappingURL=a-note.controller.js.map

@@ -22,6 +22,7 @@ const nestjs_cls_1 = require("nestjs-cls");
 const cat_module_1 = require("./cat/cat.module");
 const cat_service_1 = require("./cat/cat.service");
 const collection_module_1 = require("./collection/collection.module");
+const a_note_module_1 = require("./a-note/a-note.module");
 let AppModule = class AppModule {
     constructor(getData) {
         this.getData = getData;
@@ -53,6 +54,7 @@ exports.AppModule = AppModule = __decorate([
             comment_module_1.CommentModule,
             cat_module_1.CatModule,
             collection_module_1.CollectionModule,
+            a_note_module_1.ANoteModule,
         ],
         controllers: [],
         providers: [fetch_feeds_service_1.FetchFeedsService, cat_service_1.CatService],
