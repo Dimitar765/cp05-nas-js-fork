@@ -8,6 +8,7 @@ export const SignUp = () => {
   const [emailError, setEmailError] = useState("")
   const [passwordError, setPasswordError] = useState("")
 
+
   //const navigate = useNavigate();
 
   const onEmailChange = (e) => {
@@ -64,6 +65,8 @@ export const SignUp = () => {
         </div>
 
       </div>
+
+
     </>
   )
 }
