@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-// import { Iconoir } from 'iconoir-react';
+import React, { useState, useEffect } from "react";
 import { Menu, DeleteCircle } from "iconoir-react";
 import { Link } from "react-router-dom";
 import "./navBar.css";
+import { GetNewsService } from "../../services/ApiService";
 
 const Links = [
-  { name: "HOME", link: "/news" },
-  { name: "LogIn", link: "/" },
-  { name: "JOIN US", link: "/create" },
+  { name: "Home", link: "/news" },
   { name: "Collection", link: "/collection" },
+  { name: "LogIn", link: "/" },
+  //{ name: "JOIN US", link: "/create" },
+  { name: "LogOut", link: "/", onClick: GetNewsService.logOut },
 ];
 
 function Navbar() {

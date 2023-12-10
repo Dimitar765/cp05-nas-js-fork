@@ -2,30 +2,56 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./homePage.css";
-// import Card from '../../components/Card/Card'
 import { GetNewsService } from "../../services/ApiService";
 
 function Homepage() {
   const navigate = useNavigate();
   const [news, setNews] = useState(null);
+  const [page, setPage] = useState(1);
+  const take = 12;
 
   useEffect(() => {
-    GetNewsService.getNews().then((news) => {
+    const skip = (page - 1) * take;
+    GetNewsService.getNews(skip, take).then((news) => {
       console.log(news);
       setNews(news);
-
-      //  if (!news) {
-      //    navigate("/");
-      //  } else {
-      //    navigate("/news");
-      //  }
     });
-  }, []);
+  }, [page]);
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handelePrevPage = () => {
+    setPage((prevPage) => prevPage - 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
-      <div className="mt-20 mb-20 text-center bannerTop bg-slate-300 py-3">
+      <div className="mt-20 mb-10 text-center bannerTop bg-slate-300 py-3">
         banner top
+      </div>
+
+      <div className="flex gap-4 justify-center mb-10">
+        <div className="text-center mt-4">
+          <button
+            onClick={handelePrevPage}
+            className="bg-primary text-black px-4 py-2 rounded-full"
+            disabled={page === 1}
+          >
+            Page {page}
+          </button>
+        </div>
+
+        <div className="text-center mt-4">
+          <button
+            onClick={handleLoadMore}
+            className="bg-primary text-black px-4 py-2 rounded-full"
+          >
+            Page {page + 1}
+          </button>
+        </div>
       </div>
       <div className="mt-2">
         <div className="cardContainer">
@@ -64,6 +90,26 @@ function Homepage() {
                 </div>
               );
             })}
+        </div>
+        <div className="flex gap-4 justify-center">
+          <div className="text-center mt-4">
+            <button
+              onClick={handelePrevPage}
+              className="bg-primary text-black px-4 py-2 rounded-full"
+              disabled={page === 1}
+            >
+              Page {page}
+            </button>
+          </div>
+
+          <div className="text-center mt-4">
+            <button
+              onClick={handleLoadMore}
+              className="bg-primary text-black px-4 py-2 rounded-full"
+            >
+              Page {page + 1}
+            </button>
+          </div>
         </div>
       </div>
     </>

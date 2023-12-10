@@ -1,6 +1,7 @@
 export class GetNewsService {
-  static getNews = async () => {
-    const res = await fetch("http://localhost:3000/news", {
+  static getNews = async (skip = 0, take = 12) => {
+    const query = `?skip=${skip}&take=${take}`;
+    const res = await fetch(`http://localhost:3000/news/${query}`, {
       credentials: "include",
     });
     const news = await res.json();
@@ -90,11 +91,18 @@ export class GetNewsService {
     });
 
     const result = await userLogedIn.json();
-    console.log("log", result.statusCode);
+    console.log("log", result);
     if (result.statusCode === 500) {
       return { success: false };
     } else {
-      return { success: true };
+      return { success: true, info: result.email };
     }
+  };
+
+  static logOut = async () => {
+    const userLogedOut = await fetch("http://localhost:3000/auth/logout");
+    const result = await userLogedOut.json();
+    console.log(result);
+    return result;
   };
 }

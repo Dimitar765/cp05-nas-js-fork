@@ -37,7 +37,11 @@ function ArticlePage() {
     console.log(e.target.value);
   };
   const clearInputs = () => {
-    setComment("comment submited");
+    setComment("note saved");
+  };
+
+  const clearNote = () => {
+    setNote("note saved");
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,7 +70,7 @@ function ArticlePage() {
     } catch (error) {
       console.log("ups", error);
     }
-    clearInputs();
+    clearNote();
   };
   return (
     <>

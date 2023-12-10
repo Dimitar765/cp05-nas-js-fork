@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GetNewsService } from "../../services/ApiService";
 
 import "./Login.css";
@@ -9,9 +9,6 @@ function LogIn() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  //check if user exist,
-  //if user exist read the cookie and save it to local storage or local session
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +26,7 @@ function LogIn() {
         navigate("/news");
       } else {
         alert("wrong email or password");
+        navigate("/create");
       }
     } catch (error) {
       console.log("ups", error);
@@ -36,24 +34,18 @@ function LogIn() {
       console.log("finally");
     }
   };
-
   return (
     <>
-      <div className="mt-20 mb-20 text-center bannerTop bg-slate-300 py-3">
-        <h1 className="font-mono text-lg">SECRET WEAPONS OF RUSSIAN BOTS</h1>
-      </div>
-      <div className="loginContainer mt-52 flex justify-around">
+      <div className="loginContainer mt-32 flex justify-around">
         <div className="titleContainer">
           <div className="text-center">SignIn</div>
           <br />
-          <div>
-            <input
-              className="mb-9 w-56"
-              value={email}
-              placeholder="  enter your email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+          <input
+            className="mb-9 w-56"
+            value={email}
+            placeholder="  enter your email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <br />
           <input
             className="w-56"
