@@ -5,7 +5,7 @@ import { User } from '@prisma/client';
 import * as argon from 'argon2';
 @Injectable()
 export class AuthService {
-  constructor(private readonly prismaService: PrismaService) { }
+  constructor(private readonly prismaService: PrismaService) {}
 
   async signUp(dto: AuthDto): Promise<User> {
     const hash = await argon.hash(dto.password);
@@ -63,5 +63,4 @@ export class AuthService {
   async getUsers() {
     return await this.prismaService.user.findMany();
   }
-
 }

@@ -16,8 +16,10 @@ let ServeNewsService = class ServeNewsService {
     constructor(prismaService) {
         this.prismaService = prismaService;
     }
-    async fetchDb() {
+    async fetchDb(skip, take) {
         return await this.prismaService.article.findMany({
+            skip: +skip,
+            take: +take,
             orderBy: {
                 id: 'desc',
             },

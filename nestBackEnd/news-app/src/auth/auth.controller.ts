@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 import { LocalAuthGuard } from './auth.guard';
@@ -6,7 +13,7 @@ import { AuthenticatedGuard } from './authenticated.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
   @Post('signUp')
   signUp(@Body() dto: AuthDto) {
     return this.authService.signUp(dto);
@@ -22,5 +29,13 @@ export class AuthController {
   @Get('users')
   getUsers() {
     return this.authService.getUsers();
+  }
+
+  @Get('logout')
+  logout(@Request() req): any {
+    req.session.destroy();
+    console.log(req.session);
+
+    return { message: 'Logout successful' };
   }
 }

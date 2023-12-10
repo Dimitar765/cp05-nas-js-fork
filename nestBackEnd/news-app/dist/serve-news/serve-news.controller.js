@@ -20,8 +20,8 @@ let ServeNewsController = class ServeNewsController {
     constructor(news) {
         this.news = news;
     }
-    getArticles() {
-        return this.news.fetchDb();
+    getArticles(req) {
+        return this.news.fetchDb(req.query.skip, req.query.take);
     }
     getArticleById(id) {
         return this.news.getArticleById(id);
@@ -31,8 +31,9 @@ exports.ServeNewsController = ServeNewsController;
 __decorate([
     (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ServeNewsController.prototype, "getArticles", null);
 __decorate([

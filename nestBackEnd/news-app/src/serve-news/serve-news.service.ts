@@ -3,10 +3,12 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ServeNewsService {
-  constructor(private readonly prismaService: PrismaService) { }
+  constructor(private readonly prismaService: PrismaService) {}
 
-  async fetchDb() {
+  async fetchDb(skip, take) {
     return await this.prismaService.article.findMany({
+      skip: +skip,
+      take: +take,
       orderBy: {
         id: 'desc',
       },

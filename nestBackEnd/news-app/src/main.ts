@@ -38,12 +38,10 @@ async function bootstrap() {
           checkPeriod: 2 * 60 * 1000, //ms
           dbRecordIdIsSessionId: true,
           dbRecordIdFunction: undefined,
-
-        }
+        },
       ),
-    })
-  )
-
+    }),
+  );
 
   app.use(passport.initialize());
   app.use(passport.session());

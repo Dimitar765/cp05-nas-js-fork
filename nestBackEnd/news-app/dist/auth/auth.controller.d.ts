@@ -25,4 +25,5 @@ export declare class AuthController {
         firstName: string;
         lastName: string;
     }[]>;
+    logout(req: any): any;
 }

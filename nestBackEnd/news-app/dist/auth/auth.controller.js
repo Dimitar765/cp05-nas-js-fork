@@ -31,6 +31,11 @@ let AuthController = class AuthController {
     getUsers() {
         return this.authService.getUsers();
     }
+    logout(req) {
+        req.session.destroy();
+        console.log(req.session);
+        return { message: 'Logout successful' };
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -55,6 +60,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "getUsers", null);
+__decorate([
+    (0, common_1.Get)('logout'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Object)
+], AuthController.prototype, "logout", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
