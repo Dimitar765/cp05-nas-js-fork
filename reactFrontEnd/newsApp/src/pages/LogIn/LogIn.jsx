@@ -1,32 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { GetNewsService } from "../../services/ApiService";
+// import { GetNewsService } from "../../services/ApiService";
 
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function LogIn() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { user, login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userBody = {
-      email: email,
-      password: password,
-    };
     try {
-      const result = await GetNewsService.logIn(
-        userBody.email,
-        userBody.password,
-      );
-      console.log(result);
-      if (result.success) {
+      const result = await login(email, password);
+      console.log(user);
+      if (result.statusCode === 200) {
         navigate("/news");
       } else {
         alert("wrong email or password");
-        navigate("/create");
+        navigate("/");
       }
     } catch (error) {
       console.log("ups", error);

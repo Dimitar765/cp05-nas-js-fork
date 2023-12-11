@@ -1,18 +1,35 @@
 import { createContext, useContext, useState } from "react";
-import { GetNewsService } from "../services/GetNewsService";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const login = (userData) => {
-    // Your login logic here
-    setUser(userData);
+  const login = async (email, password) => {
+
+    const userLogedIn = await fetch("http://localhost:3000/auth/signin", {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    const result = await userLogedIn.json();
+    console.log("result", result);
+
+    if (result.statusCode === 200) {
+      setUser(result);
+    } else {
+      setUser(null);
+    }
+    return result;
   };
 
-  const logout = () => {
-    // Your logout logic here
+  const logout = async (event) => {
+    event.preventDefault();
+    await fetch("http://localhost:3000/auth/logout")
     setUser(null);
   };
 

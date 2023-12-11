@@ -78,31 +78,4 @@ export class GetNewsService {
     console.log(result);
     return result;
   };
-
-  static logIn = async (email, password) => {
-    const userLogedIn = await fetch("http://localhost:3000/auth/signin", {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const result = await userLogedIn.json();
-    console.log("log", result);
-    if (result.statusCode === 500) {
-      return { success: false };
-    } else {
-      return { success: true, info: result.email };
-    }
-  };
-
-  static logOut = async () => {
-    const userLogedOut = await fetch("http://localhost:3000/auth/logout");
-    const result = await userLogedOut.json();
-    console.log(result);
-    return result;
-  };
 }

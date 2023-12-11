@@ -3,9 +3,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./homePage.css";
 import { GetNewsService } from "../../services/ApiService";
+import { useAuth } from "../../context/AuthContext";
 
 function Homepage() {
   const navigate = useNavigate();
+  const { user, logIn, logOut } = useAuth();
+  console.log(user);
   const [news, setNews] = useState(null);
   const [page, setPage] = useState(1);
   const take = 12;
@@ -15,7 +18,8 @@ function Homepage() {
     GetNewsService.getNews(skip, take).then((news) => {
       console.log(news);
       setNews(news);
-    });
+
+    })
   }, [page]);
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
@@ -29,6 +33,7 @@ function Homepage() {
 
   return (
     <>
+
       <div className="mt-20 mb-10 text-center bannerTop bg-slate-300 py-3">
         banner top
       </div>
@@ -112,6 +117,7 @@ function Homepage() {
           </div>
         </div>
       </div>
+
     </>
   );
 }
