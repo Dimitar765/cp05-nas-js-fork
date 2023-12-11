@@ -50,6 +50,7 @@ let AuthService = class AuthService {
         return {
             id: user.id,
             email: user.email,
+            statusCode: 200,
         };
     }
     async validateUser(email, password) {

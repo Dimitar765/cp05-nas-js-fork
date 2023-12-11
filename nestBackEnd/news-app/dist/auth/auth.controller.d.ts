@@ -15,6 +15,7 @@ export declare class AuthController {
     signIn(dto: AuthDto): Promise<{
         id: number;
         email: string;
+        statusCode: number;
     }>;
     getUsers(): Promise<{
         id: number;
